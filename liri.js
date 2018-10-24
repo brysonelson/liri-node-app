@@ -1,7 +1,7 @@
 //============================= required items and vars go here =====================================
 
 //spotify
-var spotify = require('node-spotify-api');
+var Spotify = require('node-spotify-api');
 
 //npm request
 var request = require('request');
@@ -45,7 +45,7 @@ function startApp(command, argument) {
 
     //============================ Spotify ========================
 		// Gets song information.
-    case "spotify-this-song":
+    case "spotify-song":
     
       // First gets song title argument.
       var songTitle = argument;
@@ -56,7 +56,7 @@ function startApp(command, argument) {
 
     //=========================== OMDBapi ========================
 		// Gets movie information.
-		case "movie-this":
+		case "movie":
 
       // First gets movie title argument.
       var movieTitle = argument;
@@ -116,27 +116,23 @@ function getSongInfo(songTitle) {
 // gets movie information.
 function getMovieInfo(movieTitle) {
 
+  
 	// Runs a request to the OMDB API with the users input
 	var queryUrl = "http://www.omdbapi.com/?t=" + movieTitle + "&y=&plot=short&tomatoes=true&r=json";
 
 	request(queryUrl, function(error, response, body) {
-	  
-	  if (!error && response.statusCode === 200) {
-	    
-	    // Parses the body of the site and recovers movie info.
-	    var movie = JSON.parse(body);
-
-	    // Prints out movie info.
-	    logOutput("Movie Title: " + movie.Title);
-	    logOutput("Release Year: " + movie.Year);
-	    logOutput("IMDB Rating: " + movie.imdbRating);
-	    logOutput("Country Produced In: " + movie.Country);
-	    logOutput("Language: " + movie.Language);
-	    logOutput("Plot: " + movie.Plot);
-	    logOutput("Actors: " + movie.Actors);
-	    logOutput("Rotten Tomatoes Rating: " + movie.Ratings[2].Value);
-	    logOutput("Rotten Tomatoes URL: " + movie.tomatoURL);
-	  }
+    
+    var movie = JSON.parse(body);
+       
+    // Prints out movie info.
+    console.log("Movie Title: " + movie.Title);
+    console.log("Release Year: " + movie.Year);
+    console.log("IMDB Rating: " + movie.imdbRating);
+    console.log("Country Produced In: " + movie.Country);
+    console.log("Language: " + movie.Language);
+    console.log("Plot: " + movie.Plot);
+    console.log("Actors: " + movie.Actors);
+    console.log("Rotten Tomatoes URL: " + movie.tomatoURL);
 	});
 }
 
